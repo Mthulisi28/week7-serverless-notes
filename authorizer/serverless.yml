@@ -1,0 +1,10 @@
+service: week7-authorizer
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-2
+functions:
+  authorizer:
+    handler: handler.handler
+plugins:
+  - serverless-offline

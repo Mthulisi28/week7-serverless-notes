@@ -1,0 +1,13 @@
+service: week6-live
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - http: ANY /{proxy+}
+      - http: ANY /
+plugins:
+  - serverless-offline

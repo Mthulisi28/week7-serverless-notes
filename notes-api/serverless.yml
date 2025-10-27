@@ -1,0 +1,45 @@
+service: week7-notes-api
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-2
+  environment:
+    TABLE_NAME: week7-notes
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:Query
+          Resource: arn:aws:dynamodb:us-east-2:744872514312:table/week7-notes
+functions:
+  createNote:
+    handler: handler.createNote
+    events:
+      - http:
+          path: notes
+          method: post
+  getNotes:
+    handler: handler.getNotes
+    events:
+      - http:
+          path: notes
+          method: get
+  updateNote:
+    handler: handler.updateNote
+    events:
+      - http:
+          path: notes/{noteId}
+          method: put
+  deleteNote:
+    handler: handler.deleteNote
+    events:
+      - http:
+          path: notes/{noteId}
+          method: delete
+plugins:
+  - serverless-offline
